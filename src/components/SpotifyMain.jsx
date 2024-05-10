@@ -1,9 +1,24 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { fillMusicSection, fillMusicSectionEminem, fillMusicSectionPerry, fillMusicSectionQueen } from '../redux/actions';
 import AlbumCard from './AlbumCard';
 
 const SpotifyMain = () => {
+  /*const dispatch = useDispatch()*/
+  const dispatchQueen = useDispatch()
+  const dispatchPerry = useDispatch()
+  const dispatchEminem = useDispatch()
+  /*const singleTrack = useSelector((state) => state.song.results)*/
+  const queenSongs = useSelector((state) => state.song.resultsQueen)
+  const perrySongs = useSelector((state) => state.song.resultsPerry)
+  const eminemSongs = useSelector((state) => state.song.resultsEminem)
+  useEffect(()=> {
+    /*dispatch(fillMusicSection('Eminem'));*/
+    dispatchQueen(fillMusicSectionQueen('Queen'));
+    dispatchPerry(fillMusicSectionPerry('Katy Perry'));
+    dispatchEminem(fillMusicSectionEminem('Eminem'));
+  },[])
   return (
     <main className="col-12 col-md-9 offset-md-3 mainPage">
       <div className="row">
@@ -22,7 +37,9 @@ const SpotifyMain = () => {
             <div
               className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3"
               id="rockSection"
-            ></div>
+            >
+              { queenSongs && queenSongs.slice(0,4).map((song) => (<AlbumCard key={song.id} singleSong={song}/>))}
+            </div>
           </div>
         </div>
       </div>
@@ -33,7 +50,9 @@ const SpotifyMain = () => {
             <div
               className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3"
               id="popSection"
-            ></div>
+            >
+              { perrySongs && perrySongs.slice(0,4).map((song) => (<AlbumCard key={song.id} singleSong={song}/>))}
+            </div>
           </div>
         </div>
       </div>
@@ -44,7 +63,9 @@ const SpotifyMain = () => {
             <div
               className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3"
               id="hipHopSection"
-            ></div>
+            >
+              { eminemSongs && eminemSongs.slice(0,4).map((song) => (<AlbumCard key={song.id} singleSong={song}/>))}
+            </div>
           </div>
         </div>
       </div>
