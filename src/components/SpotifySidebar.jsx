@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, Button, InputGroup, Form } from 'react-bootstrap';
 import logo from '../assets/logo/logo.png';
+import { fillMusicSection } from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 const SpotifySidebar = () => {
+  const [query, setQuery] = useState('')
+  const dispatch = useDispatch()
+
+  const handleChange = (e) => {
+    setQuery(e.target.value)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    dispatch(fillMusicSection(query))
+  }
   return (
     <aside className="col col-2">
       <Navbar expand="md" fixed="left" className="justify-content-between" id="sidebar">
@@ -20,8 +33,9 @@ const SpotifySidebar = () => {
                 <i className="bi bi-book-fill"></i>&nbsp; Your Library
               </Nav.Link>
               <InputGroup className="mt-3">
-                <Form.Control type="text" placeholder="Search" aria-label="Search" />
-                <Button variant="outline-secondary">GO</Button>
+                <Form.Control type="text" placeholder="Search" aria-label="Search" value={query} 
+              onChange={handleChange}/>
+                <Button onClick={handleSubmit} variant="outline-secondary">GO</Button>
               </InputGroup>
             </Nav>
           </Navbar.Collapse>

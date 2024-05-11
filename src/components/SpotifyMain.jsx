@@ -5,20 +5,25 @@ import { fillMusicSection, fillMusicSectionEminem, fillMusicSectionPerry, fillMu
 import AlbumCard from './AlbumCard';
 
 const SpotifyMain = () => {
-  /*const dispatch = useDispatch()*/
+  const dispatch = useDispatch()
   const dispatchQueen = useDispatch()
   const dispatchPerry = useDispatch()
   const dispatchEminem = useDispatch()
-  /*const singleTrack = useSelector((state) => state.song.results)*/
   const queenSongs = useSelector((state) => state.song.resultsQueen)
   const perrySongs = useSelector((state) => state.song.resultsPerry)
   const eminemSongs = useSelector((state) => state.song.resultsEminem)
+  const query = useSelector((state) => state.query.results)
+  const searchSongs = useSelector((state) => state.song.results)
   useEffect(()=> {
-    /*dispatch(fillMusicSection('Eminem'));*/
     dispatchQueen(fillMusicSectionQueen('Queen'));
     dispatchPerry(fillMusicSectionPerry('Katy Perry'));
     dispatchEminem(fillMusicSectionEminem('Eminem'));
-  },[])
+  },[]);
+  useEffect(() => {
+    if (query) {
+      dispatch(fillMusicSection(query));
+    }
+  }, [query]);
   return (
     <main className="col-12 col-md-9 offset-md-3 mainPage">
       <div className="row">
@@ -30,6 +35,21 @@ const SpotifyMain = () => {
           <a href="#5">DISCOVER</a>
         </div>
       </div>
+       
+       <div className="row">
+        <div className="col-10">
+          <div id="rock">
+            <h2>Best Results</h2>
+            <div
+              className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3"
+              id="rockSection"
+            >
+              { searchSongs && searchSongs.slice(0,4).map((song) => (<AlbumCard key={song.id} singleSong={song}/>))}
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div className="row">
         <div className="col-10">
           <div id="rock">

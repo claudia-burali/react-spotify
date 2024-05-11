@@ -4,6 +4,7 @@ export const GET_SONGS = "GET_SONGS";
 export const GET_QUEEN_SONGS = "GET_QUEEN_SONGS";
 export const GET_PERRY_SONGS = "GET_PERRY_SONGS";
 export const GET_EMINEM_SONGS = "GET_EMINEM_SONGS";
+export const QUERY_USER = "QUERY_USER";
 
 export const addToFavouriteAction = (singleSong) => ({
   type: ADD_TO_FAVOURITE,
@@ -87,3 +88,7 @@ export const fillMusicSectionEminem = (artistName) => {
     }
   };
 };
+export const searchAction = (inputValue) => ({
+  type: QUERY_USER,
+  payload: inputValue,
+});
